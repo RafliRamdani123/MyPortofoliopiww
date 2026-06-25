@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail · Klasifikasi Daun Padi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* (Copy style yang sama seperti project1.html atau index.html. Untuk menghemat, saya gunakan style yang sama persis dengan project1.html) */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --bg-primary: #0b0d15; --bg-secondary: #141824; --bg-card: rgba(255,255,255,0.05); --border-glass: rgba(255,255,255,0.1); --text-primary: #f0f4ff; --text-secondary: #a3b3d6; --accent-1: #6c5ce7; --accent-2: #00cec9; --accent-glow: rgba(108,92,231,0.3); --shadow: 0 20px 40px rgba(0,0,0,0.6); --transition: 0.4s; }
+        [data-theme="light"] { --bg-primary: #f0f4ff; --bg-secondary: #ffffff; --bg-card: rgba(108,92,231,0.08); --border-glass: rgba(108,92,231,0.2); --text-primary: #1a1a2e; --text-secondary: #4a4a6a; --shadow: 0 20px 40px rgba(0,0,0,0.08); }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.7; transition: background var(--transition), color var(--transition); }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+        nav { position: fixed; top: 0; left: 0; width: 100%; padding: 16px 0; background: rgba(11,13,21,0.6); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-glass); z-index: 100; }
+        [data-theme="light"] nav { background: rgba(255,255,255,0.7); }
+        .nav-wrapper { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .logo { font-size: 1.6rem; font-weight: 800; background: linear-gradient(135deg, var(--accent-1), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; cursor: pointer; }
+        .nav-links { display: flex; gap: 32px; align-items: center; list-style: none; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--text-primary); }
+        .theme-toggle { background: var(--bg-card); border: 1px solid var(--border-glass); color: var(--text-primary); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+        .theme-toggle:hover { background: var(--accent-1); color: #fff; border-color: var(--accent-1); }
+        .hamburger { display: none; font-size: 1.8rem; cursor: pointer; color: var(--text-primary); }
+        .detail-back { display: inline-flex; align-items: center; gap: 10px; background: var(--bg-card); border: 1px solid var(--border-glass); padding: 12px 24px; border-radius: 50px; color: var(--text-primary); font-weight: 600; text-decoration: none; transition: all 0.3s; margin-top: 100px; margin-bottom: 30px; }
+        .detail-back:hover { background: var(--accent-1); color: #fff; border-color: var(--accent-1); }
+        .detail-header { margin-bottom: 40px; }
+        .detail-header .badge { display: inline-block; padding: 6px 20px; border-radius: 50px; font-size: 0.8rem; font-weight: 700; background: var(--accent-1); color: #fff; margin-bottom: 16px; letter-spacing: 1px; }
+        .detail-header h1 { font-size: 3.2rem; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
+        .detail-header .meta { display: flex; flex-wrap: wrap; gap: 24px; color: var(--text-secondary); font-size: 1rem; }
+        .detail-header .meta i { margin-right: 8px; color: var(--accent-1); }
+        .detail-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: 24px; padding: 30px; margin-bottom: 40px; }
+        .detail-stats .stat-item { text-align: center; }
+        .detail-stats .stat-item h3 { font-size: 2rem; color: var(--accent-2); }
+        .detail-stats .stat-item p { font-size: 0.85rem; color: var(--text-secondary); }
+        .detail-content { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
+        .detail-content .main-text h2 { font-size: 1.8rem; margin-bottom: 16px; margin-top: 30px; }
+        .detail-content .main-text h2:first-of-type { margin-top: 0; }
+        .detail-content .main-text p { color: var(--text-secondary); margin-bottom: 20px; }
+        .detail-content .main-text ul { list-style: none; margin-bottom: 20px; }
+        .detail-content .main-text ul li { padding-left: 28px; position: relative; margin-bottom: 10px; color: var(--text-secondary); }
+        .detail-content .main-text ul li::before { content: '▹'; position: absolute; left: 0; color: var(--accent-1); font-weight: bold; }
+        .detail-sidebar .sidebar-card { background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: 24px; padding: 30px; margin-bottom: 24px; }
+        .detail-sidebar .sidebar-card h4 { font-size: 1.2rem; margin-bottom: 16px; }
+        .detail-sidebar .sidebar-card .tech-list { display: flex; flex-wrap: wrap; gap: 10px; }
+        .detail-sidebar .sidebar-card .tech-list span { background: var(--bg-primary); padding: 6px 16px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; color: var(--accent-1); border: 1px solid var(--border-glass); }
+        .detail-actions { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+        .btn { padding: 14px 34px; border-radius: 50px; font-weight: 600; text-decoration: none; transition: all 0.3s; display: inline-flex; align-items: center; gap: 10px; border: none; cursor: pointer; font-size: 1rem; justify-content: center; width: 100%; }
+        .btn-primary { background: linear-gradient(135deg, var(--accent-1), #a29bfe); color: #fff; box-shadow: 0 8px 30px var(--accent-glow); }
+        .btn-primary:hover { transform: translateY(-4px); }
+        .btn-outline { background: transparent; border: 2px solid var(--border-glass); color: var(--text-primary); }
+        .btn-outline:hover { border-color: var(--accent-1); background: var(--bg-card); }
+        .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+        .gallery-grid .placeholder { background: var(--bg-primary); border-radius: 12px; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); border: 1px solid var(--border-glass); }
+        footer { border-top: 1px solid var(--border-glass); padding: 30px 0; text-align: center; color: var(--text-secondary); font-size: 0.9rem; margin-top: 40px; }
+        @media (max-width: 992px) { .detail-content { grid-template-columns: 1fr; } .detail-header h1 { font-size: 2.4rem; } }
+        @media (max-width: 768px) { .nav-links { display: none; } .hamburger { display: block; } .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background: var(--bg-primary); padding: 24px; border-bottom: 1px solid var(--border-glass); gap: 20px; } .container { padding: 0 16px; } .detail-stats { grid-template-columns: 1fr 1fr; } }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="index.html" style="text-decoration:none;"><div class="logo">Rafli.</div></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#projects">Proyek</a></li>
+                <li><a href="index.html#skills">Keahlian</a></li>
+                <li><a href="index.html#contact">Kontak</a></li>
+                <li><button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button></li>
+            </ul>
+            <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <a href="index.html#projects" class="detail-back"><i class="fas fa-arrow-left"></i> Kembali ke Proyek</a>
+
+        <div class="detail-header">
+            <div class="badge">Computer Vision</div>
+            <h1>Klasifikasi Penyakit Daun Padi dengan Deep Learning & Grad-CAM</h1>
+            <div class="meta">
+                <span><i class="far fa-calendar-alt"></i> 2026</span>
+                <span><i class="fas fa-code"></i> 7 Teknologi</span>
+            </div>
+        </div>
+
+        <div class="detail-stats">
+            <div class="stat-item"><h3>92%</h3><p>Akurasi Model</p></div>
+            <div class="stat-item"><h3>4</h3><p>Kelas Klasifikasi</p></div>
+            <div class="stat-item"><h3>+13%</h3><p>Peningkatan dari Baseline</p></div>
+        </div>
+
+        <div class="detail-content">
+            <div class="main-text">
+                <h2>📌 Latar Belakang</h2>
+                <p>Petani sering kesulitan mengidentifikasi penyakit daun padi (Blight, Blast, Tungro) secara manual karena gejala visual yang mirip pada stadium awal, membutuhkan keahlian agronomis yang tidak selalu tersedia.</p>
+                <h2>💡 Solusi yang Diterapkan</h2>
+                <p>Mengembangkan model Deep Learning berbasis Transfer Learning EfficientNet-B0 yang mampu mengklasifikasikan 4 kondisi daun secara otomatis, dilengkapi dengan visualisasi Grad-CAM untuk menjelaskan keputusan model kepada pengguna.</p>
+                <h2>✅ Hasil & Pencapaian</h2>
+                <ul>
+                    <li>Mencapai akurasi 92% pada test set, mengungguli Baseline CNN (79%) dengan peningkatan 13%.</li>
+                    <li>Menerapkan strategi two-stage training (feature extraction + fine-tuning) untuk performa optimal.</li>
+                    <li>Mengimplementasikan Grad-CAM untuk menghasilkan heatmap overlay yang menunjukkan area fokus model (lesi daun).</li>
+                    <li>Membangun demo interaktif Gradio untuk prediksi real-time + visualisasi heatmap.</li>
+                </ul>
+            </div>
+            <div class="detail-sidebar">
+                <div class="sidebar-card">
+                    <h4>🛠️ Tech Stack</h4>
+                    <div class="tech-list">
+                        <span>Python</span><span>PyTorch</span><span>EfficientNet-B0</span><span>Grad-CAM</span><span>Gradio</span><span>OpenCV</span><span>Matplotlib</span>
+                    </div>
+                    <div class="detail-actions">
+                        <a href="https://github.com/RafliRamdani123/PROJECT-KLASIFIKASI-PENYAKIT-DAUN-PADI-DENGAN-DEEP-LEARNING-DAN-INTEPRETASI-GRAD-CAM-/blob/main/KLASIFIKASI_PENYAKIT_DAUN.ipynb" target="_blank" class="btn btn-primary"><i class="fab fa-github"></i> Lihat Kode</a>
+                        <a href="https://drive.google.com/file/d/1RevRHeNgRI27Sq-Y0eABZkwGH8Q_0cPd/view?usp=drive_link" target="_blank" class="btn btn-outline"><i class="fas fa-external-link-alt"></i> Laporan Proyek </a>
+                    </div>
+                </div>
+                <div class="sidebar-card">
+                    <h4>📸 Galeri Preview</h4>
+                    <div class="gallery-grid">
+                        <div class="placeholder">
+    <img src="sig\Picture5.jpg" alt="Preview Peta SIG Bandung" style="width: 100%; height: auto; object-fit: cover;">
+</div>
+<div class="placeholder">
+    <img src="sig\Picture6.jpg" alt="Preview Peta SIG Bandung" style="width: 100%; height: auto; object-fit: cover;">
+</div>
+<div class="placeholder">
+    <img src="sig\Picture7.jpg" alt="Preview Peta SIG Bandung" style="width: 100%; height: auto; object-fit: cover;">
+</div>
+                        <div class="placeholder">
+    <img src="sig\Picture8.jpg" alt="Preview Peta SIG Bandung" style="width: 100%; height: auto; object-fit: cover;">
+</div>
+         
+                    </div>
+                    <p style="font-size:0.75rem; color:var(--text-secondary); margin-top:8px;"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Rafli Ramdani Sulaeman. Detail Proyek Klasifikasi Daun Padi.</p>
+        </div>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        themeToggle.addEventListener('click', () => {
+            const current = html.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', next);
+            themeToggle.innerHTML = next === 'dark' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+        });
+        document.getElementById('hamburger').addEventListener('click', () => { document.getElementById('navLinks').classList.toggle('open'); });
+        document.querySelectorAll('.nav-links a').forEach(link => { link.addEventListener('click', () => { document.getElementById('navLinks').classList.remove('open'); }); });
+    </script>
+</body>
+</html>
